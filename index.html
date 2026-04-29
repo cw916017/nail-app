@@ -3,73 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fon__nail | 專業預約估價</title>
+    <title>fon__nail | 專業估價系統</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Poppins:wght@200;400&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-bg: linear-gradient(135deg, #E5989B 0%, #1B263B 100%);
-            --glass-white: rgba(255, 255, 255, 0.4);
-            --active-color: #E5989B;
-            --dark-blue: #1B263B;
+            --glass: rgba(255, 255, 255, 0.4);
+            --dark: #1B263B;
+            --accent: #E5989B;
         }
 
         body, html {
             margin: 0; padding: 0; min-height: 100vh;
             font-family: 'Noto Sans TC', sans-serif;
             background: var(--primary-bg); background-attachment: fixed;
-            display: flex; justify-content: center; align-items: flex-start;
-            padding: 20px 0;
+            display: flex; justify-content: center; padding: 20px 0;
         }
 
         .container {
             width: 92%; max-width: 450px;
-            background: var(--glass-white);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.3);
+            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 25px; border: 1px solid rgba(255,255,255,0.3);
             padding: 30px 15px; box-sizing: border-box;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
 
-        h1 { font-family: 'Poppins', sans-serif; font-weight: 200; font-size: 32px; letter-spacing: 6px; text-align: center; margin: 0; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .subtitle { font-size: 11px; text-align: center; margin: 5px 0 25px; color: rgba(255,255,255,0.8); letter-spacing: 2px; }
+        h1 { font-family: 'Poppins', sans-serif; font-weight: 200; font-size: 30px; letter-spacing: 5px; text-align: center; margin: 0; color: #fff; }
+        .subtitle { font-size: 11px; text-align: center; margin: 5px 0 25px; color: rgba(255,255,255,0.8); letter-spacing: 1.5px; }
 
-        /* 影片中的分類區塊 */
-        .section { margin-bottom: 25px; background: rgba(255,255,255,0.15); border-radius: 18px; padding: 15px; }
-        .section-title { font-weight: 700; font-size: 15px; margin-bottom: 12px; display: flex; align-items: center; color: var(--dark-blue); }
-        .section-title i { margin-right: 8px; }
+        .section { margin-bottom: 20px; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 15px; }
+        .section-title { font-weight: 700; font-size: 14px; margin-bottom: 12px; color: var(--dark); display: flex; align-items: center; }
 
-        /* 選項網格 (復刻影片樣式) */
-        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .opt-card {
+        /* 網格選單 */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .card {
             background: rgba(255,255,255,0.3); border-radius: 12px; padding: 12px;
             text-align: center; cursor: pointer; border: 1px solid transparent; transition: 0.2s;
         }
-        .opt-card.active { background: #1B263B; color: white; border-color: var(--active-color); }
-        .opt-name { font-size: 13px; display: block; }
-        .opt-price { font-size: 11px; opacity: 0.8; }
+        .card.active { background: var(--dark); color: white; }
+        .card span { display: block; }
+        .p-small { font-size: 11px; opacity: 0.7; }
 
-        /* 數量加減區 (復刻影片樣式) */
+        /* 勾選清單 */
+        .check-item {
+            background: rgba(255,255,255,0.3); padding: 12px 15px; border-radius: 12px;
+            margin-top: 8px; display: flex; align-items: center; cursor: pointer; font-size: 13px;
+        }
+        .check-item.active { border-left: 5px solid var(--dark); background: rgba(255,255,255,0.6); }
+        .checkbox { width: 18px; height: 18px; border: 2px solid var(--dark); border-radius: 4px; margin-right: 10px; display: flex; align-items: center; justify-content: center; }
+        .check-item.active .checkbox::after { content: '✔'; font-size: 12px; }
+
+        /* 款式下拉選單 (復刻影片) */
+        .select-box {
+            width: 100%; padding: 15px; border-radius: 12px; background: rgba(255,255,255,0.5);
+            border: 2px solid transparent; font-size: 15px; font-weight: 700; color: var(--dark);
+            cursor: pointer; appearance: none;
+        }
+
+        /* 隱藏的加購區域 */
+        .sub-options { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(0,0,0,0.1); }
+        .sub-options.show { display: block; }
+
+        /* 數量控制 */
         .counter-row {
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255,255,255,0.3); padding: 12px 15px;
-            border-radius: 12px; margin-top: 10px;
+            margin-bottom: 8px; font-size: 13px;
         }
-        .qty-controls { display: flex; align-items: center; gap: 15px; }
-        .qty-btn { 
-            width: 28px; height: 28px; border-radius: 50%; border: none; 
-            background: var(--dark-blue); color: white; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; font-size: 18px;
+        .controls { display: flex; align-items: center; gap: 12px; }
+        .btn-qty { 
+            width: 26px; height: 26px; border-radius: 50%; border: none; 
+            background: var(--dark); color: white; cursor: pointer;
         }
 
-        /* 底部結算區 */
+        /* 底部 */
         .footer {
             background: rgba(255,255,255,0.9); margin: 30px -15px -30px -15px;
             padding: 25px; border-radius: 0 0 25px 25px; text-align: center;
         }
-        .est-label { font-size: 12px; color: #666; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        .total-amount { font-size: 32px; font-weight: 700; color: var(--dark-blue); margin-bottom: 15px; }
-        .submit-btn {
-            background: var(--dark-blue); color: white; border: none; width: 100%;
+        .total { font-size: 32px; font-weight: 700; color: var(--dark); margin-bottom: 15px; }
+        .send-btn {
+            background: var(--dark); color: white; border: none; width: 100%;
             padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer;
         }
     </style>
@@ -78,40 +91,53 @@
 
 <div class="container">
     <h1>PRICE LIST</h1>
-    <div class="subtitle">fon__nail PROFESSIONAL BILLING</div>
+    <div class="subtitle">fon__nail NAIL ART SYSTEM</div>
 
     <div class="section">
         <div class="section-title">🗑️ 卸甲服務 / 保養</div>
-        <div class="options-grid">
-            <div class="opt-card active" onclick="selectOnly(this, 'remove', '不需卸甲', 0)">
-                <span class="opt-name">不需卸甲</span><span class="opt-price">$0</span>
-            </div>
-            <div class="opt-card" onclick="selectOnly(this, 'remove', '本店卸續做', 100)">
-                <span class="opt-name">本店卸續做</span><span class="opt-price">$100</span>
-            </div>
-            <div class="opt-card" onclick="selectOnly(this, 'remove', '他店卸續做', 200)">
-                <span class="opt-name">他店卸續做</span><span class="opt-price">$200</span>
-            </div>
-            <div class="opt-card" onclick="selectOnly(this, 'remove', '本店純卸', 200)">
-                <span class="opt-name">本店純卸</span><span class="opt-price">$200</span>
-            </div>
+        <div class="grid">
+            <div class="card active" onclick="setMain('remove', this, '不需卸甲', 0)"><span>不需卸甲</span><span class="p-small">$0</span></div>
+            <div class="card" onclick="setMain('remove', this, '本店卸續做', 100)"><span>本店卸續做</span><span class="p-small">$100</span></div>
+            <div class="card" onclick="setMain('remove', this, '他店卸續做', 200)"><span>他店卸續做</span><span class="p-small">$200</span></div>
+            <div class="card" onclick="setMain('remove', this, '他店純卸', 300)"><span>他店純卸</span><span class="p-small">$300</span></div>
+        </div>
+        
+        <div class="check-item" onclick="toggleExtra('extraDeco', this, 50)">
+            <div class="checkbox"></div>
+            <span>卸大型飾品/厚甲/指甲油/硬甲油 (+$50)</span>
+        </div>
+        <div class="check-item" onclick="toggleExtra('extraCare', this, 150)">
+            <div class="checkbox"></div>
+            <span>保養 (+$150)</span>
         </div>
     </div>
 
     <div class="section">
         <div class="section-title">🎨 款式選擇</div>
-        <div class="options-grid">
-            <div class="opt-card" onclick="selectOnly(this, 'style', '單色', 500)">
-                <span class="opt-name">單色</span><span class="opt-price">$500</span>
+        <select class="select-box" id="style-select" onchange="styleChanged()">
+            <option value="">請點擊選擇基本款式</option>
+            <option value="500">單色 ($500)</option>
+            <option value="600">貓眼 ($600)</option>
+            <option value="700">自由發揮 ($700)</option>
+            <option value="701">指定款 ($700up)</option>
+        </select>
+
+        <div id="style-extras" class="sub-options">
+            <div class="counter-row">
+                <span>跳色 (+$20/色)</span>
+                <div class="controls">
+                    <button class="btn-qty" onclick="changeQty('jumpColor', -1)">-</button>
+                    <span id="jumpColor-val">0</span>
+                    <button class="btn-qty" onclick="changeQty('jumpColor', 1)">+</button>
+                </div>
             </div>
-            <div class="opt-card" onclick="selectOnly(this, 'style', '貓眼', 600)">
-                <span class="opt-name">貓眼</span><span class="opt-price">$600</span>
-            </div>
-            <div class="opt-card" onclick="selectOnly(this, 'style', '自由發揮', 700)">
-                <span class="opt-name">自由發揮</span><span class="opt-price">$700</span>
-            </div>
-            <div class="opt-card" onclick="selectOnly(this, 'style', '指定款', 700)">
-                <span class="opt-name">指定款</span><span class="opt-price">$700↑</span>
+            <div id="cat-eye-add" class="counter-row">
+                <span>加購貓眼 (+$30/指)</span>
+                <div class="controls">
+                    <button class="btn-qty" onclick="changeQty('catEye', -1)">-</button>
+                    <span id="catEye-val">0</span>
+                    <button class="btn-qty" onclick="changeQty('catEye', 1)">+</button>
+                </div>
             </div>
         </div>
     </div>
@@ -119,64 +145,73 @@
     <div class="section">
         <div class="section-title">➕ 加購項目</div>
         <div class="counter-row">
-            <span>補甲 / 延甲 <small style="color:#666; font-size:10px;">($50/指)</small></span>
-            <div class="qty-controls">
-                <button class="qty-btn" onclick="changeQty(-1)">−</button>
-                <span id="ext-qty" style="font-weight:700;">0</span>
-                <button class="qty-btn" onclick="changeQty(1)">+</button>
+            <span>補甲 / 延甲 (+$50/指)</span>
+            <div class="controls">
+                <button class="btn-qty" onclick="changeQty('extension', -1)">-</button>
+                <span id="extension-val">0</span>
+                <button class="btn-qty" onclick="changeQty('extension', 1)">+</button>
             </div>
         </div>
     </div>
 
     <div class="footer">
-        <div class="est-label">Estimated Total</div>
-        <div class="total-amount">$ <span id="display-total">0</span></div>
-        <button class="submit-btn" onclick="generateOrder()">確認報價內容</button>
+        <div class="total">$ <span id="total">0</span></div>
+        <button class="send-btn" onclick="send()">確認預約內容</button>
     </div>
 </div>
 
 <script>
-    let state = {
-        remove: { name: '不需卸甲', price: 0 },
-        style: { name: '', price: 0 },
-        extQty: 0
+    let data = {
+        removePrice: 0, removeName: '不需卸甲',
+        extraDeco: 0, extraCare: 0,
+        basePrice: 0, styleName: '',
+        jumpColor: 0, catEye: 0, extension: 0
     };
 
-    function selectOnly(el, type, name, price) {
-        // 切換同組按鈕狀態
-        const cards = el.parentElement.querySelectorAll('.opt-card');
-        cards.forEach(c => c.classList.remove('active'));
+    function setMain(type, el, name, price) {
+        el.parentElement.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
         el.classList.add('active');
+        data.removePrice = price; data.removeName = name;
+        update();
+    }
+
+    function toggleExtra(key, el, price) {
+        el.classList.toggle('active');
+        data[key] = el.classList.contains('active') ? price : 0;
+        update();
+    }
+
+    function styleChanged() {
+        const sel = document.getElementById('style-select');
+        data.basePrice = parseInt(sel.value) || 0;
+        data.styleName = sel.options[sel.selectedIndex].text.split(' (')[0];
         
-        state[type] = { name, price };
-        updateCalc();
-    }
-
-    function changeQty(val) {
-        state.extQty = Math.max(0, state.extQty + val);
-        document.getElementById('ext-qty').innerText = state.extQty;
-        updateCalc();
-    }
-
-    function updateCalc() {
-        const total = state.remove.price + state.style.price + (state.extQty * 50);
-        document.getElementById('display-total').innerText = total;
-    }
-
-    function generateOrder() {
-        if (!state.style.name) return alert("請選擇美甲款式喔！");
+        // 控制子選項顯示 (選了才有)
+        document.getElementById('style-extras').classList.toggle('show', data.basePrice > 0);
+        // 如果是指定款或自由發揮，通常不加購單指貓眼，這邊做個隱藏判斷
+        document.getElementById('cat-eye-add').style.display = (sel.value == "500") ? "flex" : "none";
         
-        const summary = `【fon__nail 預約諮詢】\n` +
-                        `卸甲：${state.remove.name}\n` +
-                        `款式：${state.style.name}\n` +
-                        `加購：延甲 x ${state.extQty}\n` +
-                        `總計：NT$ ${document.getElementById('display-total').innerText}\n` +
-                        `----------\n(請貼上訊息至 LINE 預約)`;
-        
-        window.location.href = `https://line.me/R/msg/text/?${encodeURIComponent(summary)}`;
+        update();
     }
 
-    updateCalc(); // 初始計算一次
+    function changeQty(key, val) {
+        data[key] = Math.max(0, data[key] + val);
+        document.getElementById(key + '-val').innerText = data[key];
+        update();
+    }
+
+    function update() {
+        let total = data.removePrice + data.extraDeco + data.extraCare + data.basePrice;
+        total += (data.jumpColor * 20) + (data.catEye * 30) + (data.extension * 50);
+        document.getElementById('total').innerText = total;
+    }
+
+    function send() {
+        if(!data.styleName) return alert("請先選擇款式唷！");
+        const msg = `【fon__nail 預約單】\n項目：${data.removeName}\n款式：${data.styleName}\n附加：保養(${data.extraCare?'有':'無'})/卸裝飾(${data.extraDeco?'有':'無'})\n加購：跳色x${data.jumpColor}/貓眼x${data.catEye}/延甲x${data.extension}\n總預估：NT$ ${document.getElementById('total').innerText}`;
+        window.location.href = `https://line.me/R/msg/text/?${encodeURIComponent(msg)}`;
+    }
+    update();
 </script>
 
 </body>
