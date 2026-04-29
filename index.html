@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fon__nail | 數位服務計算</title>
+    <title>fon__nail | 快速預約計算</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Poppins:wght@200;400&display=swap" rel="stylesheet">
     <style>
         body, html {
@@ -16,120 +16,147 @@
         }
 
         .glass-container {
-            width: 90%; max-width: 450px;
+            width: 90%; max-width: 480px;
             background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px 20px; box-sizing: border-box; color: #4A4E69;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 35px 20px; box-sizing: border-box; color: #2B2D42;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        h1 { font-family: 'Poppins', sans-serif; font-weight: 200; font-size: 28px; letter-spacing: 5px; text-align: center; margin: 0; }
-        .subtitle { font-size: 11px; text-align: center; margin: 10px 0; color: #6D6875; }
-        .divider { height: 1px; background-color: rgba(74, 78, 105, 0.2); margin: 20px auto; width: 90%; }
+        h1 { font-family: 'Poppins', sans-serif; font-weight: 200; font-size: 30px; letter-spacing: 6px; text-align: center; margin: 0; color: #1B263B; }
+        .subtitle { font-size: 12px; text-align: center; margin: 8px 0; color: #4A4E69; letter-spacing: 1px; }
+        .divider { height: 1px; background-color: rgba(27, 38, 59, 0.15); margin: 25px auto; width: 85%; }
 
-        /* 選項樣式 */
-        .item-group { margin-bottom: 25px; }
-        .group-title { font-weight: 700; font-size: 16px; margin-bottom: 15px; display: block; border-left: 4px solid #E5989B; padding-left: 10px; }
-        
-        .option-row {
+        /* 選項群組 */
+        .category-title { 
+            font-weight: 700; font-size: 17px; margin: 25px 0 15px 5px; 
+            display: flex; align-items: center; color: #1B263B;
+        }
+        .category-title::before { content: ""; width: 4px; height: 18px; background: #E5989B; margin-right: 10px; border-radius: 2px; }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 15px; margin-bottom: 10px; padding: 15px;
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255, 255, 255, 0.2);
-            margin-bottom: 8px; padding: 12px 15px; border-radius: 12px;
-            cursor: pointer; transition: 0.3s;
+            cursor: pointer; transition: all 0.2s ease;
+            border: 1px solid transparent;
         }
-        .option-row.active { background: rgba(255, 255, 255, 0.6); border: 1px solid #E5989B; }
+        .option-card.active {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #E5989B;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(229, 152, 155, 0.2);
+        }
 
-        /* 計算與結算區 */
-        .total-section {
-            position: sticky; bottom: 0; background: rgba(255, 255, 255, 0.8);
-            margin: 20px -20px -30px -20px; padding: 20px;
-            border-radius: 0 0 30px 30px; text-align: center;
+        .item-name { font-size: 15px; font-weight: 400; }
+        .item-price { font-weight: 700; color: #1B263B; }
+        .sub-note { font-size: 10px; color: #6D6875; display: block; margin-top: 2px; }
+
+        /* 底部結帳欄 */
+        .bottom-bar {
+            position: sticky; bottom: -10px; 
+            background: rgba(255, 255, 255, 0.9);
+            margin: 30px -20px -35px -20px;
+            padding: 25px 20px;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            text-align: center;
         }
-        .total-amount { font-size: 24px; font-weight: 700; color: #1B263B; margin-bottom: 10px; }
+        .total-label { font-size: 14px; color: #6D6875; margin-bottom: 5px; }
+        .total-price { font-size: 32px; font-weight: 700; color: #1B263B; margin-bottom: 15px; }
+        .total-price span { font-size: 18px; margin-right: 5px; }
+
         .submit-btn {
-            background: #1B263B; color: white; border: none; padding: 12px 30px;
-            border-radius: 50px; font-size: 16px; cursor: pointer; width: 100%;
+            background: #1B263B; color: white; border: none; 
+            padding: 15px; border-radius: 15px; width: 100%;
+            font-size: 16px; font-weight: 700; cursor: pointer;
+            transition: 0.3s;
         }
+        .submit-btn:active { transform: scale(0.97); background: #0D1B2A; }
     </style>
 </head>
 <body>
 
 <div class="glass-container">
     <h1>PRICE LIST</h1>
-    <div class="subtitle">fon__nail 數位服務選單</div>
+    <div class="subtitle">fon__nail 快速估價系統</div>
     <div class="divider"></div>
 
-    <div class="item-group">
-        <span class="group-title">卸甲服務</span>
-        <div class="option-row" onclick="toggleItem(this, '本店卸續做', 100)">
-            <span>本店卸續做</span><span>$100</span>
-        </div>
-        <div class="option-row" onclick="toggleItem(this, '他店卸續做', 200)">
-            <span>他店卸續做</span><span>$200</span>
-        </div>
+    <div class="category-title">卸甲服務</div>
+    <div class="option-card" onclick="toggleItem(this, '本店卸續做', 100)">
+        <div><span class="item-name">本店卸續做</span></div>
+        <span class="item-price">$100</span>
+    </div>
+    <div class="option-card" onclick="toggleItem(this, '他店卸續做', 200)">
+        <div><span class="item-name">他店卸續做</span><span class="sub-note">含大飾品/厚甲/硬甲油</span></div>
+        <span class="item-price">$200</span>
     </div>
 
-    <div class="item-group">
-        <span class="group-title">美甲款式</span>
-        <div class="option-row" onclick="selectOne(this, 'style', '單色', 500)">
-            <span>單色</span><span>$500</span>
-        </div>
-        <div class="option-row" onclick="selectOne(this, 'style', '貓眼', 600)">
-            <span>貓眼</span><span>$600</span>
-        </div>
-        <div class="option-row" onclick="selectOne(this, 'style', '指定款', 700)">
-            <span>指定款 (依複雜度起)</span><span>$700↑</span>
-        </div>
+    <div class="category-title">美甲款式</div>
+    <div class="option-card" onclick="selectOne(this, 'nail-style', '單色/貓眼', 500)">
+        <div><span class="item-name">基礎單色 / 貓眼</span></div>
+        <span class="item-price">$500</span>
+    </div>
+    <div class="option-card" onclick="selectOne(this, 'nail-style', '指定款', 700)">
+        <div><span class="item-name">造型指定款</span><span class="sub-note">依複雜程度報價 \$700 起</span></div>
+        <span class="item-price">$700</span>
     </div>
 
-    <div class="divider"></div>
+    <div class="category-title">其他加購</div>
+    <div class="option-card" onclick="toggleItem(this, '跳色', 20)">
+        <div><span class="item-name">跳色 (乙色)</span></div>
+        <span class="item-price">$20</span>
+    </div>
+    <div class="option-card" onclick="toggleItem(this, '延甲', 50)">
+        <div><span class="item-name">延甲 (每指)</span></div>
+        <span class="item-price">$50</span>
+    </div>
 
-    <div class="total-section">
-        <div class="total-amount">總計 NT$ <span id="total-price">0</span></div>
-        <button class="submit-btn" onclick="generateOrder()">產出預約表單給店長</button>
+    <div class="bottom-bar">
+        <div class="total-label">預估總金額</div>
+        <div class="total-price"><span>NT$</span><span id="display-total">0</span></div>
+        <button class="submit-btn" onclick="sendToLine()">產出預約訊息並傳送</button>
     </div>
 </div>
 
 <script>
-    let selectedItems = [];
     let totalPrice = 0;
+    let selectedList = [];
 
-    function toggleItem(element, name, price) {
-        element.classList.toggle('active');
-        updateTotal();
+    function toggleItem(el, name, price) {
+        el.classList.toggle('active');
+        calculate();
     }
 
-    function selectOne(element, group, name, price) {
-        // 同組只能選一個的邏輯
-        const rows = element.parentElement.querySelectorAll('.option-row');
-        rows.forEach(r => r.classList.remove('active'));
-        element.classList.add('active');
-        updateTotal();
+    function selectOne(el, group, name, price) {
+        const siblings = el.parentElement.querySelectorAll('.option-card');
+        const isActive = el.classList.contains('active');
+        siblings.forEach(s => s.classList.remove('active'));
+        if (!isActive) el.classList.add('active');
+        calculate();
     }
 
-    function updateTotal() {
+    function calculate() {
         totalPrice = 0;
-        selectedItems = [];
-        const actives = document.querySelectorAll('.option-row.active');
+        selectedList = [];
+        const actives = document.querySelectorAll('.option-card.active');
         actives.forEach(a => {
-            const name = a.children[0].innerText;
-            const price = parseInt(a.children[1].innerText.replace('$', ''));
+            const name = a.querySelector('.item-name').innerText;
+            const price = parseInt(a.querySelector('.item-price').innerText.replace('$', ''));
             totalPrice += price;
-            selectedItems.push(name);
+            selectedList.push(name);
         });
-        document.getElementById('total-price').innerText = totalPrice;
+        document.getElementById('display-total').innerText = totalPrice;
     }
 
-    function generateOrder() {
-        if (selectedItems.length === 0) {
-            alert("請至少選擇一項服務喔！");
+    function sendToLine() {
+        if (selectedList.length === 0) {
+            alert("請先選擇服務項目喔！");
             return;
         }
-        const orderText = `【fon__nail 預約清單】\n服務項目：${selectedItems.join('、')}\n預估總金額：NT$ ${totalPrice}\n-------------------\n請填寫預約日期：\n請填寫聯絡電話：`;
-        
-        // 模擬產出表單，這段可以改成直接跳轉 LINE
-        const encodedText = encodeURIComponent(orderText);
-        window.location.href = `https://line.me/R/msg/text/?${encodedText}`;
+        const msg = `【fon__nail 預約諮詢】\n服務項目：${selectedList.join(' + ')}\n預算總計：NT$ ${totalPrice}\n------------------\n日期：\n時間：\n備註：`;
+        window.location.href = `https://line.me/R/msg/text/?${encodeURIComponent(msg)}`;
     }
 </script>
 
