@@ -3,150 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fon__nail Price List</title>
+    <title>fon__nail | 數位價目表</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Poppins:wght@200;400&display=swap" rel="stylesheet">
     <style>
         body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
+            margin: 0; padding: 0; min-height: 100vh;
             font-family: 'Noto Sans TC', sans-serif;
-            /* 模擬你上傳的質感紅藍漸層背景 */
             background: linear-gradient(135deg, #E5989B 0%, #1B263B 100%);
             background-attachment: fixed;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: flex-start;
+            padding-top: 40px;
         }
 
         .glass-container {
-            width: 85%;
-            max-width: 500px;
-            height: 85vh;
+            width: 90%; max-width: 450px;
             background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            padding: 40px 20px;
-            overflow-y: auto;
-            box-sizing: border-box;
-            color: #4A4E69;
+            padding: 30px 20px; box-sizing: border-box; color: #4A4E69;
         }
 
         h1 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 200;
-            font-size: 32px;
-            letter-spacing: 6px;
-            margin: 0;
-            text-align: center;
+            font-family: 'Poppins', sans-serif; font-weight: 200;
+            font-size: 28px; letter-spacing: 5px; text-align: center; margin: 0;
         }
 
-        .subtitle {
-            font-size: 12px;
-            text-align: center;
-            margin-top: 5px;
-            letter-spacing: 1px;
-            color: #6D6875;
-        }
+        .subtitle { font-size: 11px; text-align: center; margin-top: 5px; color: #6D6875; }
+        .divider { height: 1px; background-color: rgba(74, 78, 105, 0.2); margin: 20px auto; width: 90%; }
 
-        .divider {
-            height: 1px;
-            background-color: rgba(74, 78, 105, 0.3);
-            margin: 20px auto;
-            width: 80%;
+        /* 質感按鈕設計 */
+        .menu-btn {
+            width: 100%; background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 15px; border-radius: 15px; margin-bottom: 12px;
+            font-size: 16px; color: #4A4E69; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: 0.3s; font-weight: 400;
         }
+        .menu-btn:active { transform: scale(0.98); background: rgba(255, 255, 255, 0.5); }
 
-        .section-title {
-            font-weight: 700;
-            font-size: 18px;
-            margin: 30px 0 15px 10px;
+        /* 隱藏的內容區塊 */
+        .content {
+            max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out;
+            background: rgba(255, 255, 255, 0.1); border-radius: 10px; margin-bottom: 10px;
         }
+        .content.show { max-height: 800px; padding: 15px 10px; }
 
-        .price-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            padding: 0 10px;
-            font-size: 15px;
-        }
-
-        .price-value {
-            font-weight: 700;
-        }
-
-        .notes {
-            font-size: 13px;
-            line-height: 1.8;
-            padding: 0 10px;
-            color: #403D39;
-        }
-
-        .notes-header {
-            font-size: 11px;
-            color: #6D6875;
-            margin-bottom: 5px;
-        }
-
-        .footer {
-            text-align: center;
-            font-size: 12px;
-            margin-top: 40px;
-            color: #9A8C98;
-        }
-
-        /* 隱藏滾動條但保留功能 */
-        .glass-container::-webkit-scrollbar { display: none; }
-        .glass-container { -ms-overflow-style: none; scrollbar-width: none; }
+        .price-item { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
+        .price-value { font-weight: 700; }
+        .note-text { font-size: 10px; color: #6D6875; margin: -5px 0 10px 0; }
+        
+        .rules { font-size: 13px; line-height: 1.8; color: #403D39; }
     </style>
 </head>
 <body>
 
 <div class="glass-container">
     <h1>PRICE LIST</h1>
-    <div class="subtitle">單色與造型皆含基礎保養、建構</div>
+    <div class="subtitle">fon__nail 數位服務選單</div>
     <div class="divider"></div>
 
-    <div class="price-list">
+    <button class="menu-btn" onclick="toggleContent('remove')"><span>✨ 卸甲服務</span><span>＋</span></button>
+    <div id="remove" class="content">
         <div class="price-item"><span>本店卸續做</span><span class="price-value">$100</span></div>
         <div class="price-item"><span>他店卸續做</span><span class="price-value">$200</span></div>
-        <div style="font-size: 10px; color: #9A8C98; margin: -10px 0 15px 10px;">卸大型飾品 / 厚甲 / 指甲油 / 硬甲油 +$50</div>
-        
+        <div class="note-text">卸大型飾品/厚甲/硬甲油 +$50</div>
         <div class="price-item"><span>本店純卸甲</span><span class="price-value">$200</span></div>
         <div class="price-item"><span>他店純卸甲</span><span class="price-value">$300</span></div>
-
-        <div style="margin-top: 25px;"></div>
-        <div class="price-item"><span>單色</span><span class="price-value">$500</span></div>
-        <div class="price-item"><span>貓眼</span><span class="price-value">$600</span></div>
-        <div style="font-size: 10px; color: #9A8C98; margin: -10px 0 15px 10px;">單色、貓眼跳色 +$20 / 乙色</div>
-
-        <div class="price-item"><span>自由發揮 (2~3指款式)</span><span class="price-value">$700</span></div>
-        <div class="price-item"><span>指定款 (依複雜程度報價)</span><span class="price-value">$700 up</span></div>
-        
-        <div style="margin-top: 25px;"></div>
-        <div class="price-item"><span>補甲、延甲</span><span class="price-value">$50 / 隻</span></div>
     </div>
 
-    <div class="divider" style="margin-top: 40px;"></div>
-
-    <div class="section-title">預約須知</div>
-    <div class="notes-header" style="margin-left: 10px;">請大聲朗讀</div>
-    <div class="notes">
-        • 居家工作室，位於台中市南屯區日牧吐司惠文店附近<br>
-        • 每月 25 號開放新舊客預約<br>
-        • 預約需支付 500 元訂金，可接受提前更改時間乙次<br>
-        • 無足部服務<br>
-        • 不接受病理甲、疾病甲...等問題甲<br>
-        • 施作時間 3-4 小時
+    <button class="menu-btn" onclick="toggleContent('nail')"><span>🎨 美甲款式</span><span>＋</span></button>
+    <div id="nail" class="content">
+        <div class="price-item"><span>基礎單色</span><span class="price-value">$500</span></div>
+        <div class="price-item"><span>貓眼系列</span><span class="price-value">$600</span></div>
+        <div class="note-text">跳色 +$20 / 乙色</div>
+        <div class="price-item"><span>自由發揮(2-3指)</span><span class="price-value">$700</span></div>
+        <div class="price-item"><span>指定款報價</span><span class="price-value">$700 up</span></div>
     </div>
 
-    <div class="footer">
-        fon__nail<br>
-        價目表 & 預約須知 2026/01/01 啟用
+    <button class="menu-btn" onclick="toggleContent('notice')"><span>📢 預約須知</span><span>＋</span></button>
+    <div id="notice" class="content">
+        <div class="rules">
+            • 位於台中南屯 (日牧吐司附近)<br>
+            • 預約需支付 500 元訂金<br>
+            • 施作時間約 3-4 小時，請預留時間<br>
+            • 不接待男賓及寵物
+        </div>
+    </div>
+
+    <div class="divider"></div>
+    <div style="text-align: center; font-size: 10px; color: rgba(255,255,255,0.6);">
+        © 2026 fon__nail. All rights reserved.
     </div>
 </div>
+
+<script>
+    function toggleContent(id) {
+        const content = document.getElementById(id);
+        const allContents = document.querySelectorAll('.content');
+        
+        allContents.forEach(c => {
+            if (c.id !== id) c.classList.remove('show');
+        });
+        
+        content.classList.toggle('show');
+    }
+</script>
 
 </body>
 </html>
