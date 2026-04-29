@@ -3,183 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>美甲價格計算器</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>fon__nail Price List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Poppins:wght@200;400&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #fff1f2; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
-        .active-btn { background-color: #f43f5e !important; color: white !important; border-color: #f43f5e !important; }
-        .checkbox-active { background-color: #ffe4e6; color: #be123c; border-color: #fda4af; }
-        .copy-btn { background-color: #4b5563; color: white; transition: all 0.3s; }
-        .copy-btn:active { transform: scale(0.95); }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Noto Sans TC', sans-serif;
+            /* 模擬你上傳的質感紅藍漸層背景 */
+            background: linear-gradient(135deg, #E5989B 0%, #1B263B 100%);
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass-container {
+            width: 85%;
+            max-width: 500px;
+            height: 85vh;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            padding: 40px 20px;
+            overflow-y: auto;
+            box-sizing: border-box;
+            color: #4A4E69;
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 200;
+            font-size: 32px;
+            letter-spacing: 6px;
+            margin: 0;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            text-align: center;
+            margin-top: 5px;
+            letter-spacing: 1px;
+            color: #6D6875;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: rgba(74, 78, 105, 0.3);
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        .section-title {
+            font-weight: 700;
+            font-size: 18px;
+            margin: 30px 0 15px 10px;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding: 0 10px;
+            font-size: 15px;
+        }
+
+        .price-value {
+            font-weight: 700;
+        }
+
+        .notes {
+            font-size: 13px;
+            line-height: 1.8;
+            padding: 0 10px;
+            color: #403D39;
+        }
+
+        .notes-header {
+            font-size: 11px;
+            color: #6D6875;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 40px;
+            color: #9A8C98;
+        }
+
+        /* 隱藏滾動條但保留功能 */
+        .glass-container::-webkit-scrollbar { display: none; }
+        .glass-container { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="p-4 md:p-8">
-    <div class="max-w-md mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-rose-100">
-        <div class="bg-rose-400 p-6 text-white text-center">
-            <h1 class="text-2xl font-bold flex items-center justify-center gap-2">
-                <i class="fas fa-calculator"></i> 美甲價格計算
-            </h1>
-            <p class="text-rose-100 text-sm mt-1">選取項目後可複製明細</p>
-        </div>
+<body>
 
-        <div class="p-6 space-y-6">
-            <section>
-                <h2 class="text-lg font-bold mb-3 flex items-center gap-2 text-rose-600">
-                    <i class="fas fa-eraser"></i> 1. 卸甲服務
-                </h2>
-                <div class="grid grid-cols-2 gap-2">
-                    <button onclick="setRemoval('不需卸甲', 0)" class="removal-btn p-2 rounded-xl text-sm border bg-white text-gray-600 border-gray-200 active-btn" id="btn-不需卸甲">不需卸甲<span class="block text-xs opacity-80">$0</span></button>
-                    <button onclick="setRemoval('本店卸', 100)" class="removal-btn p-2 rounded-xl text-sm border bg-white text-gray-600 border-gray-200" id="btn-本店卸">本店卸<span class="block text-xs opacity-80">$100</span></button>
-                    <button onclick="setRemoval('他店卸', 200)" class="removal-btn p-2 rounded-xl text-sm border bg-white text-gray-600 border-gray-200" id="btn-他店卸">他店卸<span class="block text-xs opacity-80">$200</span></button>
-                    <button onclick="setRemoval('本店純卸', 200)" class="removal-btn p-2 rounded-xl text-sm border bg-white text-gray-600 border-gray-200" id="btn-本店純卸">本店純卸<span class="block text-xs opacity-80">$200</span></button>
-                    <button onclick="setRemoval('他店純卸', 300)" class="removal-btn p-2 rounded-xl text-sm border bg-white text-gray-600 border-gray-200" id="btn-他店純卸">他店純卸<span class="block text-xs opacity-80">$300</span></button>
-                </div>
-            </section>
+<div class="glass-container">
+    <h1>PRICE LIST</h1>
+    <div class="subtitle">單色與造型皆含基礎保養、建構</div>
+    <div class="divider"></div>
 
-            <section>
-                <h2 class="text-lg font-bold mb-3 flex items-center gap-2 text-rose-600">
-                    <i class="fas fa-paint-brush"></i> 2. 基礎款式
-                </h2>
-                <div class="space-y-3">
-                    <select id="baseStyle" onchange="updateStyleOptions()" class="w-full p-3 rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-rose-300">
-                        <option value="none">請選擇款式</option>
-                        <option value="單色">單色 ($500)</option>
-                        <option value="貓眼">貓眼 ($600)</option>
-                        <option value="自由發揮">自由發揮 ($700)</option>
-                        <option value="指定款">指定款 ($700 up)</option>
-                    </select>
+    <div class="price-list">
+        <div class="price-item"><span>本店卸續做</span><span class="price-value">$100</span></div>
+        <div class="price-item"><span>他店卸續做</span><span class="price-value">$200</span></div>
+        <div style="font-size: 10px; color: #9A8C98; margin: -10px 0 15px 10px;">卸大型飾品 / 厚甲 / 指甲油 / 硬甲油 +$50</div>
+        
+        <div class="price-item"><span>本店純卸甲</span><span class="price-value">$200</span></div>
+        <div class="price-item"><span>他店純卸甲</span><span class="price-value">$300</span></div>
 
-                    <div id="style-extras" class="hidden bg-rose-50 p-4 rounded-xl space-y-3">
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm">跳色 (+$20/色)</span>
-                            <div class="flex items-center gap-3">
-                                <button onclick="changeCounter('extraColors', -1)" class="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center">-</button>
-                                <span id="count-extraColors" class="font-bold w-4 text-center">0</span>
-                                <button onclick="changeCounter('extraColors', 1)" class="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center">+</button>
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm">跳貓眼 (+$30/色)</span>
-                            <div class="flex items-center gap-3">
-                                <button onclick="changeCounter('catEyeColors', -1)" class="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center">-</button>
-                                <span id="count-catEyeColors" class="font-bold w-4 text-center">0</span>
-                                <button onclick="changeCounter('catEyeColors', 1)" class="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center">+</button>
-                            </div>
-                        </div>
-                    </div>
+        <div style="margin-top: 25px;"></div>
+        <div class="price-item"><span>單色</span><span class="price-value">$500</span></div>
+        <div class="price-item"><span>貓眼</span><span class="price-value">$600</span></div>
+        <div style="font-size: 10px; color: #9A8C98; margin: -10px 0 15px 10px;">單色、貓眼跳色 +$20 / 乙色</div>
 
-                    <div id="custom-price-div" class="hidden bg-rose-50 p-4 rounded-xl">
-                        <label class="text-sm block mb-1">依複雜度報價 (低消$700):</label>
-                        <input type="number" id="customPriceInput" value="700" oninput="calculateTotal()" class="w-full p-2 rounded-lg border-none focus:ring-2 focus:ring-rose-300 text-lg font-bold">
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <h2 class="text-lg font-bold mb-3 flex items-center gap-2 text-rose-600">
-                    <i class="fas fa-gem"></i> 3. 附加項目
-                </h2>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center px-2">
-                        <span class="text-sm">補甲/延甲 (+$50/指)</span>
-                        <div class="flex items-center gap-3">
-                            <button onclick="changeCounter('repairs', -1)" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">-</button>
-                            <span id="count-repairs" class="font-bold w-4 text-center">0</span>
-                            <button onclick="changeCounter('repairs', 1)" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">+</button>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="toggleAddon('largeDecor', '大型飾品', 50)" id="addon-largeDecor" class="addon-btn p-2 rounded-xl text-xs border bg-white text-gray-500">大型飾品 +$50</button>
-                        <button onclick="toggleAddon('thickNail', '厚甲', 50)" id="addon-thickNail" class="addon-btn p-2 rounded-xl text-xs border bg-white text-gray-500">厚甲 +$50</button>
-                        <button onclick="toggleAddon('nailPolish', '指甲油卸', 50)" id="addon-nailPolish" class="addon-btn p-2 rounded-xl text-xs border bg-white text-gray-500">指甲油卸 +$50</button>
-                        <button onclick="toggleAddon('hardener', '硬甲油卸', 50)" id="addon-hardener" class="addon-btn p-2 rounded-xl text-xs border bg-white text-gray-500">硬甲油卸 +$50</button>
-                        <button onclick="toggleAddon('spa', '加購保養', 150)" id="addon-spa" class="col-span-2 addon-btn p-2 rounded-xl text-xs border bg-white text-gray-500">加購保養 +$150</button>
-                    </div>
-                </div>
-            </section>
-
-            <div class="pt-6 border-t-2 border-dashed border-rose-100 text-center">
-                <div class="flex justify-between items-center mb-6">
-                    <button onclick="resetAll()" class="text-gray-400 hover:text-rose-500 text-xs underline">重設</button>
-                    <div class="text-right">
-                        <span class="text-4xl font-black text-rose-600" id="totalPrice">$0</span>
-                    </div>
-                </div>
-
-                <button onclick="copyToClipboard()" class="copy-btn w-full py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-2">
-                    <i class="fas fa-copy"></i> 複製訂單明細
-                </button>
-                <p id="copyStatus" class="text-rose-500 text-sm mt-2 opacity-0 transition-opacity">已複製到剪貼簿！</p>
-            </div>
-        </div>
+        <div class="price-item"><span>自由發揮 (2~3指款式)</span><span class="price-value">$700</span></div>
+        <div class="price-item"><span>指定款 (依複雜程度報價)</span><span class="price-value">$700 up</span></div>
+        
+        <div style="margin-top: 25px;"></div>
+        <div class="price-item"><span>補甲、延甲</span><span class="price-value">$50 / 隻</span></div>
     </div>
 
-    <script>
-        let state = { removal: '不需卸甲', removalPrice: 0, baseStyle: 'none', basePrice: 0, extraColors: 0, catEyeColors: 0, repairs: 0, addons: {} };
+    <div class="divider" style="margin-top: 40px;"></div>
 
-        function setRemoval(label, price) {
-            state.removal = label; state.removalPrice = price;
-            document.querySelectorAll('.removal-btn').forEach(btn => btn.classList.remove('active-btn'));
-            document.getElementById('btn-' + label).classList.add('active-btn');
-            calculateTotal();
-        }
+    <div class="section-title">預約須知</div>
+    <div class="notes-header" style="margin-left: 10px;">請大聲朗讀</div>
+    <div class="notes">
+        • 居家工作室，位於台中市南屯區日牧吐司惠文店附近<br>
+        • 每月 25 號開放新舊客預約<br>
+        • 預約需支付 500 元訂金，可接受提前更改時間乙次<br>
+        • 無足部服務<br>
+        • 不接受病理甲、疾病甲...等問題甲<br>
+        • 施作時間 3-4 小時
+    </div>
 
-        function updateStyleOptions() {
-            const style = document.getElementById('baseStyle').value;
-            const extrasDiv = document.getElementById('style-extras');
-            const customDiv = document.getElementById('custom-price-div');
-            extrasDiv.classList.add('hidden'); customDiv.classList.add('hidden');
-            state.baseStyle = style; state.basePrice = 0;
-            if (style === '單色') { state.basePrice = 500; extrasDiv.classList.remove('hidden'); }
-            else if (style === '貓眼') { state.basePrice = 600; extrasDiv.classList.remove('hidden'); }
-            else if (style === '自由發揮') { state.basePrice = 700; }
-            else if (style === '指定款') { state.basePrice = 700; customDiv.classList.remove('hidden'); }
-            calculateTotal();
-        }
+    <div class="footer">
+        fon__nail<br>
+        價目表 & 預約須知 2026/01/01 啟用
+    </div>
+</div>
 
-        function changeCounter(field, delta) {
-            state[field] = Math.max(0, state[field] + delta);
-            document.getElementById('count-' + field).innerText = state[field];
-            calculateTotal();
-        }
-
-        function toggleAddon(id, label, price) {
-            if (state.addons[label]) { delete state.addons[label]; document.getElementById('addon-' + id).classList.remove('checkbox-active'); }
-            else { state.addons[label] = price; document.getElementById('addon-' + id).classList.add('checkbox-active'); }
-            calculateTotal();
-        }
-
-        function calculateTotal() {
-            let total = state.removalPrice;
-            if (state.baseStyle === '指定款') total += Math.max(700, parseInt(document.getElementById('customPriceInput').value) || 700);
-            else total += state.basePrice;
-            total += (state.extraColors * 20) + (state.catEyeColors * 30) + (state.repairs * 50);
-            Object.values(state.addons).forEach(p => total += p);
-            document.getElementById('totalPrice').innerText = '$' + total;
-            return total;
-        }
-
-        function copyToClipboard() {
-            if (state.baseStyle === 'none') { alert('請先選擇基礎款式'); return; }
-            const total = calculateTotal();
-            let text = `美甲需求明細：\n- 卸甲：${state.removal}\n- 款式：${state.baseStyle}\n`;
-            if (state.extraColors > 0) text += `- 跳色：${state.extraColors} 色\n`;
-            if (state.catEyeColors > 0) text += `- 跳貓眼：${state.catEyeColors} 色\n`;
-            if (state.repairs > 0) text += `- 補甲/延甲：${state.repairs} 指\n`;
-            const addons = Object.keys(state.addons);
-            if (addons.length > 0) text += `- 附加：${addons.join('、')}\n`;
-            text += `💰 預估總計：$${total}`;
-
-            navigator.clipboard.writeText(text).then(() => {
-                const status = document.getElementById('copyStatus');
-                status.style.opacity = '1';
-                setTimeout(() => status.style.opacity = '0', 2000);
-            });
-        }
-
-        function resetAll() { location.reload(); }
-    </script>
 </body>
 </html>
